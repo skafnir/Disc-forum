@@ -30,7 +30,7 @@ class TestDocumentCreateView(APITestCase):
         Test if we can upload a file
         """
 
-        url = reverse('upload:document-upload')
+        url = reverse('upload:upload')
 
         photo_file = self.generate_photo_file()
 
@@ -46,7 +46,7 @@ class TestDocumentCreateView(APITestCase):
         """
         Test if upload generates single file
         """
-        url = reverse('upload:document-upload')
+        url = reverse('upload:upload')
 
         photo_file = self.generate_photo_file()
 
