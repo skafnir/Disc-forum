@@ -60,4 +60,40 @@ class TestDocumentCreateView(APITestCase):
 
         self.assertEqual(document_count, 1)
 
+    def test_get_list(self):
+        """
+        Test for GET - method not allowed
+        """
+        data = {}
+        url = reverse('main:document-upload')
+        response = self.client.get(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def test_put_item(self):
+        """
+        Test for PUT - method not allowed
+        """
+        data = {}
+        url = reverse('main:document-upload')
+        response = self.client.put(url, data, format='multipart')
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def test_patch_item(self):
+        """
+        Test for PATCH - method not allowed
+        """
+        data = {}
+        url = reverse('main:document-upload')
+        response = self.client.patch(url, data, format='multipart')
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def test_delete_item(self):
+        """
+        Test for DELETE - method not allowed
+        """
+        data = {}
+        url = reverse('main:document-upload')
+        response = self.client.delete(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
 
