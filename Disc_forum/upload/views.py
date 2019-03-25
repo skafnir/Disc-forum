@@ -16,4 +16,10 @@ class DocumentCreateView(generics.CreateAPIView):
         return Document.objects.all()
 
 
+class DocumentListView(generics.ListAPIView):
+    """
+    List all documents.
+    """
+    pass
+
 
