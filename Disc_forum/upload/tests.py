@@ -116,3 +116,39 @@ class TestDocumentListView(APITestCase):
         url = reverse('upload:upload-list')
         response = self.client.get(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_create_item(self):
+        """
+        Test if we can upload a file
+        """
+        data = {}
+        url = reverse('upload:upload-list')
+        response = self.client.post(url, data, format='multipart')
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def test_put_item(self):
+        """
+        Test for PUT - method not allowed
+        """
+        data = {}
+        url = reverse('upload:upload-list')
+        response = self.client.put(url, data, format='multipart')
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def test_patch_item(self):
+        """
+        Test for PATCH - method not allowed
+        """
+        data = {}
+        url = reverse('upload:upload-list')
+        response = self.client.patch(url, data, format='multipart')
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def test_delete_item(self):
+        """
+        Test for DELETE - method not allowed
+        """
+        data = {}
+        url = reverse('upload:upload-list')
+        response = self.client.delete(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
