@@ -20,6 +20,13 @@ class DocumentListView(generics.ListAPIView):
     """
     List all documents.
     """
-    pass
 
+    lookup_field = 'pk'
+    serializer_class = DocumentSerializer
+
+    def get_queryset(self):
+        return Document.objects.all()
+
+    def get_serializer_context(self, *args, **kwargs):
+        return {'request': self.request}
 
