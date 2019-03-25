@@ -97,3 +97,22 @@ class TestDocumentCreateView(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
+class TestDocumentListView(APITestCase):
+    """
+    TestCase for DocumentListView
+    """
+    def setUp(self):
+        document = Document.objects.create(description='random words',
+                                           document="http://127.0.0.1:8000/media/documents/"
+                                                    "wccfcyberpunk20771-740x429.jpg"
+                                           )
+
+    def test_get_list(self):
+        """
+        Test for DocumentListView for correct response
+        """
+        documents = Document.objects.all()
+        data = {'documents': documents}
+        url = reverse('upload:upload-list')
+        response = self.client.get(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
