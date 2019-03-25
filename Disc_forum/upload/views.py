@@ -15,6 +15,9 @@ class DocumentCreateView(generics.CreateAPIView):
     def get_queryset(self):
         return Document.objects.all()
 
+    def get_serializer_context(self, *args, **kwargs):
+        return {'request': self.request}
+
 
 class DocumentListView(generics.ListAPIView):
     """
