@@ -1,3 +1,6 @@
+from django.conf import settings
+from django.conf.urls.static import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import path, re_path
 
 from upload.views import DocumentCreateView, DocumentListView
@@ -9,3 +12,7 @@ urlpatterns = [
     re_path(r'^upload-list/', DocumentListView.as_view(), name='upload-list'),
 
 ]
+
+urlpatterns += staticfiles_urlpatterns()
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
