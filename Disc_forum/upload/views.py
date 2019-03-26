@@ -33,3 +33,11 @@ class DocumentListView(generics.ListAPIView):
     def get_serializer_context(self, *args, **kwargs):
         return {'request': self.request}
 
+
+class DocumentRUView(generics.RetrieveUpdateAPIView):
+    """
+    Retrieve / update document.
+    """
+    pass
+
+
