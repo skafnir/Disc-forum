@@ -175,4 +175,38 @@ class TestDocumentRUView(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
+    def test_get_item(self):
+        """
+        Test for GET - 200 OK
+        """
+        document = Document.objects.first()
+        url = document.get_api_url()
+        data = {'document': document}
+        response = self.client.get(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_patch_item(self):
+        """
+        Test for PATCH - 200 OK
+        """
+        document = Document.objects.first()
+        url = document.get_api_url()
+        data = {
+            'description': 'another random words'
+        }
+        response = self.client.patch(url, data, format='multipart')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_delete_item(self):
+        """
+        Test for DELETE - method not allowed
+        """
+        document = Document.objects.first()
+        url = document.get_api_url()
+        data = {}
+        response = self.client.delete(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+
+
 
