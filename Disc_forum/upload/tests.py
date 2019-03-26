@@ -152,3 +152,27 @@ class TestDocumentListView(APITestCase):
         url = reverse('upload:upload-list')
         response = self.client.delete(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+
+class TestDocumentRUView(APITestCase):
+    """
+    TestCase for DocumentRUView
+    """
+    def setUp(self):
+        document = Document.objects.create(description='random words',
+                                           document="http://127.0.0.1:8000/media/documents/"
+                                                    "wccfcyberpunk20771-740x429.jpg"
+                                           )
+
+    def test_create_item(self):
+        """
+        Test if we can upload a file
+        """
+        document = Document.objects.first()
+        url = document.get_api_url()
+        data = {}
+        response = self.client.post(url, data, format='multipart')
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+
+
