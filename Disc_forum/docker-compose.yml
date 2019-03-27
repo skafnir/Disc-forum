@@ -1,0 +1,21 @@
+version: '3'
+services:
+  db:
+    image: postgres
+  migration:
+    build: ..
+    command: python3 manage.py migrate --noinput
+    volumes:
+      - .:/Disc_forum
+    depends_on:
+      - db
+  web:
+    build: ..
+    command: python3 manage.py runserver 0.0.0.0:8990
+    volumes:
+      - .:/Disc_forum
+    ports:
+      - "8990:8990"
+    depends_on:
+      - migration
+      - db
