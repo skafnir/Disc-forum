@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'upload',
+    'forum',
+
 ]
 
 MIDDLEWARE = [
@@ -143,5 +145,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 #     print("Brak konfiguracji bazy danych w pliku local_settings.py!")
 #     print("Uzupełnij dane i spróbuj ponownie!")
 #     exit(0)
-#
+
 
