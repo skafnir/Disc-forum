@@ -13,8 +13,8 @@ class ForumPost(models.Model):
     content = models.TextField(null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return self.user
+    # def __str__(self):
+    #     return self.user
 
     def get_api_url(self, request=None):
         return api_reverse('forum:forum-post-rud', kwargs={'pk': self.pk}, request=request)

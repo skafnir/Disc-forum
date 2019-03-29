@@ -1,4 +1,6 @@
 from django.contrib.auth import get_user_model
+from django.urls import reverse
+from rest_framework import status
 from rest_framework.test import APITestCase
 
 from forum.models import ForumPost
@@ -23,3 +25,15 @@ class ForumPostListCreateAPITestCase(APITestCase):
     def test_single_forum_post(self):
         service_count = ForumPost.objects.count()
         self.assertEqual(service_count, 1)
+
+    def test_get_item(self):
+        """
+        Test for GET - 200 OK
+        """
+        posting = ForumPost.objects.first()
+        url = posting.get_api_url()
+        data = {'posting': posting}
+        response = self.client.get(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
