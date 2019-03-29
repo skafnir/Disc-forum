@@ -27,5 +27,12 @@ class ForumPostRUDView(generics.RetrieveUpdateDestroyAPIView):
     """
     Retrieve / update / delete forum post.
     """
-    pass
+    lookup_field = 'pk'
+    serializer_class = ForumPostSerializer
+
+    def get_queryset(self):
+        return ForumPost.objects.all()
+
+    def get_serializer_context(self, *args, **kwargs):
+        return {'request': self.request}
 
