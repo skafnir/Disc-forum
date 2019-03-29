@@ -25,4 +25,3 @@ class DocumentSerializer(serializers.ModelSerializer):
         request = self.context.get('request')
         return obj.get_api_url(request=request)
 
-
