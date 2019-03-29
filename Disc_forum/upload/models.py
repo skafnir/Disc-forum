@@ -12,4 +12,6 @@ class Document(models.Model):
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def get_api_url(self, request=None):
-        return api_reverse('forum:forum-post-rud', kwargs={'pk': self.pk}, request=request)
+        return api_reverse('upload:upload-ru', kwargs={'pk': self.pk}, request=request)
+
+

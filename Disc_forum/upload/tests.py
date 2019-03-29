@@ -174,7 +174,6 @@ class TestDocumentRUView(APITestCase):
         response = self.client.post(url, data, format='multipart')
         self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
-
     def test_get_item(self):
         """
         Test for GET - 200 OK
