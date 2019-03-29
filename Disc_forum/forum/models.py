@@ -5,6 +5,9 @@ from rest_framework.reverse import reverse as api_reverse
 
 
 class ForumPost(models.Model):
+    """
+    Model for forum posts - user, post title, post content, timestamp
+    """
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=128, null=True, blank=True)
     content = models.TextField(null=True, blank=True)
