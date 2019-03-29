@@ -1,3 +1,10 @@
-from django.shortcuts import render
+from rest_framework import generics, mixins
 
-# Create your views here.
+
+class ForumPostListCreateView(mixins.CreateModelMixin, generics.ListAPIView):
+    pass
+
+
+class ForumPostRUDView(generics.RetrieveUpdateDestroyAPIView):
+    pass
+
