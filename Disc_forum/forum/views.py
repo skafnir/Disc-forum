@@ -24,6 +24,9 @@ class ForumPostListCreateView(mixins.CreateModelMixin, generics.ListAPIView):
             # filters qs and allows to check in name and description and makes them unique
         return qs
 
+    def get_serializer_context(self, *args, **kwargs):
+        return {'request': self.request}
+
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
