@@ -14,7 +14,12 @@ class ForumPost(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.user.username)
+        return str(self.user.username) + ' ' + self.title
+
+    # user == owner for permission IsOwnerOrReadOnly
+    @property
+    def owner(self):
+        return self.user
 
     def get_api_url(self, request=None):
         return api_reverse('forum:forum-post-rud', kwargs={'pk': self.pk}, request=request)
