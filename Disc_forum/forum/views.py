@@ -20,7 +20,7 @@ class ForumPostListCreateView(mixins.CreateModelMixin, generics.ListAPIView):
         qs = ForumPost.objects.all()
         query = self.request.GET.get('q')
         if query is not None:
-            qs = filter(Q(name__icontains=query) | Q(description_icontains=query)).distinct()
+            qs = qs.filter(Q(title__icontains=query) | Q(content__icontains=query)).distinct()
             # filters qs and allows to check in name and description and makes them unique
         return qs
 
