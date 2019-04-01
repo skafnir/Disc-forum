@@ -11,6 +11,7 @@ class DocumentCreateView(generics.CreateAPIView):
 
     lookup_field = 'pk'
     serializer_class = DocumentSerializer
+    permission_classes = []
 
     def get_queryset(self):
         return Document.objects.all()
@@ -26,6 +27,7 @@ class DocumentListView(generics.ListAPIView):
 
     lookup_field = 'pk'
     serializer_class = DocumentSerializer
+    permission_classes = []
 
     def get_queryset(self):
         return Document.objects.all()
@@ -41,6 +43,7 @@ class DocumentRUView(generics.RetrieveUpdateAPIView):
 
     lookup_field = 'pk'
     serializer_class = DocumentSerializer
+    permission_classes = []
 
     def get_queryset(self):
         return Document.objects.all()
