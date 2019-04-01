@@ -26,7 +26,7 @@ class ForumPostSerializer(serializers.ModelSerializer):
         request = self.context.get('request')
         return obj.get_api_url(request=request)
 
-    def validate_title(self, value):
+    def validate_title_unique(self, value):
         qs = ForumPost.objects.filter(name_iexact=value)
         if self.instance:                                   # excluding instance
             qs = qs.exclude(pk=self.instance.pk)
