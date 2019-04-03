@@ -16,9 +16,9 @@ class ForumPostListCreateAPITestCase(APITestCase):
         """
         Set up
         """
-        self.username = "john"
-        self.email = "john@snow.com"
-        self.password = "you_know_nothing"
+        self.username = 'john'
+        self.email = 'john@snow.com'
+        self.password = 'you_know_nothing'
         self.user = User.objects.create_user(self.username, self.email, self.password)
 
     def test_single_user(self):
@@ -27,11 +27,6 @@ class ForumPostListCreateAPITestCase(APITestCase):
         """
         user_count = User.objects.count()
         self.assertEqual(user_count, 1)
-    #
-    # def test_create_forum_post(self):
-    #     data = {'title': 'Random title', 'content': 'Lorem ipsum dolor sitt amet'}
-    #     response = self.client.post(self.url, data)
-    #     self.assertEqual(201, response.status_code)
 
     def test_user_forum_post(self):
         """
@@ -40,6 +35,12 @@ class ForumPostListCreateAPITestCase(APITestCase):
         ForumPost.objects.create(user=self.user, title='Random title', content='Lorem ipsum dolor sitt amet')
         response = self.client.get(self.url)
         self.assertTrue(len(json.loads(response.content)) == ForumPost.objects.count())
+
+    # def test_create_forum_post(self):
+    #     data = {'user': self.user, 'title': 'Random title', 'content': 'Lorem ipsum dolor sitt amet'}
+    #     response = self.client.post(self.url, data)
+    #     self.assertEqual(201, response.status_code)
+
 
 
 
