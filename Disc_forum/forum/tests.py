@@ -36,14 +36,29 @@ class ForumPostListCreateAPITestCase(APITestCase):
         response = self.client.get(self.url)
         self.assertTrue(len(json.loads(response.content)) == ForumPost.objects.count())
 
+    def test_get_list(self):
+        """
+        Test for GET list - 200 OK
+        """
+        postings = ForumPost.objects.all()
+        data = {'postings': postings}
+        response = self.client.get(self.url, data)
+        self.assertEqual(response.status_code, 200)
+
+    def test_get_item(self):
+        """
+        Test for GET item - 200 OK
+        """
+        posting = ForumPost.objects.first()
+        data = {'posting': posting}
+        response = self.client.get(self.url, data)
+        self.assertEqual(response.status_code, 200)
+
     def test_create_forum_post(self):
         self.client.force_login(self.user)
         data = {'title': 'Random title', 'content': 'Lorem ipsum dolor sitt amet'}
         response = self.client.post(self.url, data)
         self.assertEqual(response.status_code, 201)
-
-
-
 
 
 
