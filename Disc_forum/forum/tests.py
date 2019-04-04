@@ -10,12 +10,12 @@ from forum.models import ForumPost
 
 
 class ForumPostListCreateAPITestCase(APITestCase):
-    url = reverse("forum:forum-post-create")
 
     def setUp(self):
         """
         Set up
         """
+        self.url = reverse('forum:forum-post-create')
         self.username = 'john'
         self.email = 'john@snow.com'
         self.password = 'you_know_nothing'
@@ -40,7 +40,7 @@ class ForumPostListCreateAPITestCase(APITestCase):
         self.client.force_login(self.user)
         data = {'title': 'Random title', 'content': 'Lorem ipsum dolor sitt amet'}
         response = self.client.post(self.url, data)
-        self.assertEqual(201, response.status_code)
+        self.assertEqual(response.status_code, 201)
 
 
 
