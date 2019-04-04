@@ -7,6 +7,7 @@ from rest_framework.test import APITestCase
 from rest_framework.reverse import reverse as api_reverse
 
 from forum.models import ForumPost
+from forum.serializers import ForumPostSerializer
 
 
 class ForumPostListCreateAPITestCase(APITestCase):
@@ -86,6 +87,31 @@ class ForumPostListCreateAPITestCase(APITestCase):
         data = {}
         response = self.client.delete(self.url, data)
         self.assertEqual(response.status_code, 405)
+
+
+class ForumPostRUDAPITestCase(APITestCase):
+
+    def setUp(self):
+        """
+        Set up
+        """
+        self.username = 'john'
+        self.email = 'john@snow.com'
+        self.password = 'you_know_nothing'
+        self.user = User.objects.create_user(self.username, self.email, self.password)
+        self.forum_post = ForumPost.objects.create(user=self.user,
+                                                   title='Random title',
+                                                   content='Lorem ipsum dolor sitt amet',
+                                                   )
+        self.url = reverse('forum:forum-post-rud', kwargs={'pk': self.forum_post.pk})
+
+    def test_single_user(self):
+        """
+        Test if there is 1 user
+        """
+        user_count = User.objects.count()
+        self.assertEqual(user_count, 1)
+
 
 
 
