@@ -54,11 +54,38 @@ class ForumPostListCreateAPITestCase(APITestCase):
         response = self.client.get(self.url, data)
         self.assertEqual(response.status_code, 200)
 
-    def test_create_forum_post(self):
+    def test_create_item(self):
+        """
+        Test for POST forum post - 201 created
+        """
         self.client.force_login(self.user)
         data = {'title': 'Random title', 'content': 'Lorem ipsum dolor sitt amet'}
         response = self.client.post(self.url, data)
         self.assertEqual(response.status_code, 201)
+
+    def test_put_item(self):
+        """
+        Test for PUT - 405 method not allowed
+        """
+        data = {}
+        response = self.client.put(self.url, data)
+        self.assertEqual(response.status_code, 405)
+
+    def test_patch_item(self):
+        """
+        Test for PATCH - 405 method not allowed
+        """
+        data = {}
+        response = self.client.patch(self.url, data)
+        self.assertEqual(response.status_code, 405)
+
+    def test_delete_item(self):
+        """
+        Test for DELETE - 405 method not allowed
+        """
+        data = {}
+        response = self.client.delete(self.url, data)
+        self.assertEqual(response.status_code, 405)
 
 
 
