@@ -112,27 +112,27 @@ class ForumPostRUDAPITestCase(APITestCase):
         user_count = User.objects.count()
         self.assertEqual(user_count, 1)
 
-    def test_get_item(self):
+    def test_get_item_correct_user(self):
         """
-        Test for GET item - 200 OK
+        Test for GET item - correct user - 200 OK
         """
         posting = ForumPost.objects.first()
         data = {'posting': posting}
         response = self.client.get(self.url, data)
         self.assertEqual(response.status_code, 200)
 
-    def test_create_item(self):
+    def test_create_item_correct_user(self):
         """
-        Test for POST forum post - 405 method not allowed
+        Test for POST - correct user - 405 method not allowed
         """
         self.client.force_login(self.user)
         data = {'title': 'Random title', 'content': 'Lorem ipsum dolor sitt amet'}
         response = self.client.post(self.url, data)
         self.assertEqual(response.status_code, 405)
 
-    def test_put_item(self):
+    def test_put_item_correct_user(self):
         """
-        Test for PUT - 200 OK
+        Test for PUT - correct user - 200 OK
         """
         self.client.force_login(self.user)
         data = {'title': 'Random title'}
@@ -142,3 +142,25 @@ class ForumPostRUDAPITestCase(APITestCase):
         response_data = json.loads(response.content)
         forum_post = ForumPost.objects.get(id=self.forum_post.id)
         self.assertEqual(response_data.get("title"), forum_post.title)
+
+    def test_patch_item_correct_user(self):
+        """
+        Test for PATCH - correct user - 200 OK
+        """
+        self.client.force_login(self.user)
+        data = {'title': 'Random title'}
+        response = self.client.patch(self.url, data)
+        self.assertEqual(response.status_code, 200)
+
+        response_data = json.loads(response.content)
+        forum_post = ForumPost.objects.get(id=self.forum_post.id)
+        self.assertEqual(response_data.get("title"), forum_post.title)
+
+    def test_delete_item_correct_user(self):
+        """
+        Test for DELETE - correct user - 204 no content
+        """
+        self.client.force_login(self.user)
+        response = self.client.delete(self.url)
+        self.assertEqual(response.status_code, 204)
+
