@@ -164,3 +164,33 @@ class ForumPostRUDAPITestCase(APITestCase):
         response = self.client.delete(self.url)
         self.assertEqual(response.status_code, 204)
 
+    def test_put_item_incorrect_user(self):
+        """
+        Test for PUT - incorrect user - 403 forbidden
+        """
+        new_user = User.objects.create_user("newuser", "new@user.com", "newpass")
+        self.client.force_login(new_user)
+        data = {'title': 'New title'}
+        response = self.client.put(self.url, data)
+        self.assertEqual(response.status_code, 403)
+
+    def test_patch_item_incorrect_user(self):
+        """
+        Test for PATCH - incorrect user - 403 forbidden
+        """
+        new_user = User.objects.create_user("newuser", "new@user.com", "newpass")
+        self.client.force_login(new_user)
+        data = {'title': 'Another new title'}
+        response = self.client.patch(self.url, data)
+        self.assertEqual(response.status_code, 403)
+
+    def test_delete_item_incorrect_user(self):
+        """
+        Test for DELETE - incorrect user - 403 forbidden
+        """
+        new_user = User.objects.create_user("newuser", "new@user.com", "newpass")
+        self.client.force_login(new_user)
+        response = self.client.delete(self.url)
+        self.assertEqual(response.status_code, 403)
+
+
