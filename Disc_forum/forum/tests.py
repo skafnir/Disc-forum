@@ -135,7 +135,7 @@ class ForumPostRUDAPITestCase(APITestCase):
         Test for PUT - correct user - 200 OK
         """
         self.client.force_login(self.user)
-        data = {'title': 'Random title'}
+        data = {'title': 'New title'}
         response = self.client.put(self.url, data)
         self.assertEqual(response.status_code, 200)
 
@@ -148,7 +148,7 @@ class ForumPostRUDAPITestCase(APITestCase):
         Test for PATCH - correct user - 200 OK
         """
         self.client.force_login(self.user)
-        data = {'title': 'Random title'}
+        data = {'title': 'Another new title'}
         response = self.client.patch(self.url, data)
         self.assertEqual(response.status_code, 200)
 
