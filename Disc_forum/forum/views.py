@@ -12,7 +12,6 @@ class ForumPostListCreateView(mixins.CreateModelMixin, generics.ListAPIView):
     """
     lookup_field = 'pk'
     serializer_class = ForumPostSerializer
-    permission_classes = [IsOwnerOrReadOnly]
 
     # queryset = ForumPost.objects.all()
 
