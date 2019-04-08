@@ -8,9 +8,9 @@ from upload.views import DocumentCreateView, DocumentListView, DocumentRUView
 app_name = 'upload'
 
 urlpatterns = [
-    path('upload/', DocumentCreateView.as_view(), name='upload'),
-    re_path(r'^upload-list/', DocumentListView.as_view(), name='upload-list'),
-    re_path(r'^uploaded/(?P<pk>(\d)+)/$', DocumentRUView.as_view(), name='upload-ru')
+    path('', DocumentCreateView.as_view(), name='upload'),
+    path('list/', DocumentListView.as_view(), name='upload-list'),
+    re_path(r'^(?P<pk>(\d)+)/$', DocumentRUView.as_view(), name='upload-ru')
 
 ]
 
