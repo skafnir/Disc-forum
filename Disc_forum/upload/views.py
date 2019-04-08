@@ -1,5 +1,6 @@
 from rest_framework import generics
 
+from forum.permissions import IsOwnerOrReadOnly
 from upload.models import Document
 from upload.serializers import DocumentSerializer
 
@@ -44,7 +45,7 @@ class DocumentRUView(generics.RetrieveUpdateAPIView):
 
     lookup_field = 'pk'
     serializer_class = DocumentSerializer
-    permission_classes = []
+    permission_classes = [IsOwnerOrReadOnly]
 
     def get_queryset(self):
         return Document.objects.all()
