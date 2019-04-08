@@ -13,6 +13,9 @@ class Document(models.Model):
     document = models.FileField(upload_to='documents/')
     timestamp = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return str(self.user.username) + ' ' + self.description
+
     # user == owner for permission IsOwnerOrReadOnly
     @property
     def owner(self):
