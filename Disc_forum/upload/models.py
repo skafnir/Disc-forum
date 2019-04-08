@@ -22,6 +22,6 @@ class Document(models.Model):
         return self.user
 
     def get_api_url(self, request=None):
-        return api_reverse('upload:upload-ru', kwargs={'pk': self.pk}, request=request)
+        return api_reverse('upload:ru', kwargs={'pk': self.pk}, request=request)
 
 
