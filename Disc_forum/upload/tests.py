@@ -1,15 +1,15 @@
 import io
 
 from PIL import Image
+from django.contrib.auth.models import User
 from django.urls import reverse
 
-from rest_framework import status
 from rest_framework.test import APITestCase
 
 from upload.models import Document
 
 
-class TestDocumentCreateView(APITestCase):
+class DocumentCreateAPITestCase(APITestCase):
     """
     TestCase for DocumentCreateView
     """
@@ -25,187 +25,47 @@ class TestDocumentCreateView(APITestCase):
         file.seek(0)
         return file
 
-    def test_create_item(self):
-        """
-        Test if we can upload a file
-        """
+    # def test_create_item(self):
+    #     """
+    #     Test if we can upload a file
+    #     """
+    #
+    #     url = reverse('upload:upload')
+    #
+    #     photo_file = self.generate_photo_file()
+    #
+    #     data = {
+    #         'description': 'random words',
+    #         'document': photo_file
+    #         }
+    #
+    #     response = self.client.post(url, data, format='multipart')
+    #     self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-        url = reverse('upload:upload')
-
-        photo_file = self.generate_photo_file()
-
-        data = {
-            'description': 'random words',
-            'document': photo_file
-            }
-
-        response = self.client.post(url, data, format='multipart')
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-
-    def test_single_upload(self):
-        """
-        Test if upload generates single file
-        """
-        url = reverse('upload:upload')
-
-        photo_file = self.generate_photo_file()
-
-        data = {
-            'description': 'random words',
-            'document': photo_file
-            }
-
-        response = self.client.post(url, data, format='multipart')
-        document_count = Document.objects.count()
-
-        self.assertEqual(document_count, 1)
-
-    def test_get_list(self):
-        """
-        Test for GET - method not allowed
-        """
-        data = {}
-        url = reverse('upload:upload')
-        response = self.client.get(url, data, format='json')
-        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
-
-    def test_put_item(self):
-        """
-        Test for PUT - method not allowed
-        """
-        data = {}
-        url = reverse('upload:upload')
-        response = self.client.put(url, data, format='multipart')
-        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
-
-    def test_patch_item(self):
-        """
-        Test for PATCH - method not allowed
-        """
-        data = {}
-        url = reverse('upload:upload')
-        response = self.client.patch(url, data, format='multipart')
-        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
-
-    def test_delete_item(self):
-        """
-        Test for DELETE - method not allowed
-        """
-        data = {}
-        url = reverse('upload:upload')
-        response = self.client.delete(url, data, format='json')
-        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
-
-
-class TestDocumentListView(APITestCase):
-    """
-    TestCase for DocumentListView
-    """
     def setUp(self):
-        document = Document.objects.create(description='random words',
-                                           document="http://127.0.0.1:8000/media/documents/"
-                                                    "wccfcyberpunk20771-740x429.jpg"
-                                           )
+        """
+        Set up
+        """
+        self.url = reverse('upload:create')
+        self.username = 'john'
+        self.email = 'john@snow.com'
+        self.password = 'you_know_nothing'
+        self.user = User.objects.create_user(self.username, self.email, self.password)
+        self.photo = self.generate_photo_file()
+
+    def test_single_user(self):
+        """
+        Test if there is 1 user
+        """
+        user_count = User.objects.count()
+        self.assertEqual(user_count, 1)
 
     def test_get_list(self):
         """
-        Test for DocumentListView for correct response
+        Test for GET list - 405 method not allowed
         """
         documents = Document.objects.all()
         data = {'documents': documents}
-        url = reverse('upload:upload-list')
-        response = self.client.get(url, data, format='json')
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-    def test_create_item(self):
-        """
-        Test if we can upload a file
-        """
-        data = {}
-        url = reverse('upload:upload-list')
-        response = self.client.post(url, data, format='multipart')
-        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
-
-    def test_put_item(self):
-        """
-        Test for PUT - method not allowed
-        """
-        data = {}
-        url = reverse('upload:upload-list')
-        response = self.client.put(url, data, format='multipart')
-        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
-
-    def test_patch_item(self):
-        """
-        Test for PATCH - method not allowed
-        """
-        data = {}
-        url = reverse('upload:upload-list')
-        response = self.client.patch(url, data, format='multipart')
-        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
-
-    def test_delete_item(self):
-        """
-        Test for DELETE - method not allowed
-        """
-        data = {}
-        url = reverse('upload:upload-list')
-        response = self.client.delete(url, data, format='json')
-        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
-
-
-class TestDocumentRUView(APITestCase):
-    """
-    TestCase for DocumentRUView
-    """
-    def setUp(self):
-        document = Document.objects.create(description='random words',
-                                           document="http://127.0.0.1:8000/media/documents/"
-                                                    "wccfcyberpunk20771-740x429.jpg"
-                                           )
-
-    def test_create_item(self):
-        """
-        Test if we can upload a file
-        """
-        document = Document.objects.first()
-        url = document.get_api_url()
-        data = {}
-        response = self.client.post(url, data, format='multipart')
-        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
-
-    def test_get_item(self):
-        """
-        Test for GET - 200 OK
-        """
-        document = Document.objects.first()
-        url = document.get_api_url()
-        data = {'document': document}
-        response = self.client.get(url, data, format='json')
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-    def test_patch_item(self):
-        """
-        Test for PATCH - 200 OK
-        """
-        document = Document.objects.first()
-        url = document.get_api_url()
-        data = {
-            'description': 'another random words'
-        }
-        response = self.client.patch(url, data, format='multipart')
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-    def test_delete_item(self):
-        """
-        Test for DELETE - method not allowed
-        """
-        document = Document.objects.first()
-        url = document.get_api_url()
-        data = {}
-        response = self.client.delete(url, data, format='json')
-        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
-
-
-
+        response = self.client.get(self.url, data)
+        self.assertEqual(response.status_code, 405)
 
