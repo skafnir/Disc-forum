@@ -25,23 +25,6 @@ class DocumentCreateAPITestCase(APITestCase):
         file.seek(0)
         return file
 
-    # def test_create_item(self):
-    #     """
-    #     Test if we can upload a file
-    #     """
-    #
-    #     url = reverse('upload:upload')
-    #
-    #     photo_file = self.generate_photo_file()
-    #
-    #     data = {
-    #         'description': 'random words',
-    #         'document': photo_file
-    #         }
-    #
-    #     response = self.client.post(url, data, format='multipart')
-    #     self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-
     def setUp(self):
         """
         Set up
@@ -69,3 +52,19 @@ class DocumentCreateAPITestCase(APITestCase):
         response = self.client.get(self.url, data)
         self.assertEqual(response.status_code, 405)
 
+    def test_create_item_with_user(self):
+        """
+        Test for POST document with user- 201 created
+        """
+        self.client.force_login(self.user)
+        data = {'description': 'Random title', 'document': self.photo}
+        response = self.client.post(self.url, data, format='multipart')
+        self.assertEqual(response.status_code, 201)
+
+    def test_create_item_without_user(self):
+        """
+        Test for POST document without user - 401 unauthorized
+        """
+        data = {'description': 'Random title', 'document': self.photo}
+        response = self.client.post(self.url, data, format='multipart')
+        self.assertEqual(response.status_code, 401)
