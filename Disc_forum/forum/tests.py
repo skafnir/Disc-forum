@@ -55,7 +55,7 @@ class ForumPostListCreateAPITestCase(APITestCase):
         response = self.client.get(self.url, data)
         self.assertEqual(response.status_code, 200)
 
-    def test_create_item(self):
+    def test_create_item_with_user(self):
         """
         Test for POST forum post - 201 created
         """
@@ -64,10 +64,19 @@ class ForumPostListCreateAPITestCase(APITestCase):
         response = self.client.post(self.url, data)
         self.assertEqual(response.status_code, 201)
 
+    def test_create_item_without_user(self):
+        """
+        Test for POST forum post - 401 unauthorized
+        """
+        data = {'title': 'Random title', 'content': 'Lorem ipsum dolor sitt amet'}
+        response = self.client.post(self.url, data)
+        self.assertEqual(response.status_code, 401)
+
     def test_put_item(self):
         """
         Test for PUT - 405 method not allowed
         """
+        self.client.force_login(self.user)
         data = {}
         response = self.client.put(self.url, data)
         self.assertEqual(response.status_code, 405)
@@ -76,6 +85,7 @@ class ForumPostListCreateAPITestCase(APITestCase):
         """
         Test for PATCH - 405 method not allowed
         """
+        self.client.force_login(self.user)
         data = {}
         response = self.client.patch(self.url, data)
         self.assertEqual(response.status_code, 405)
@@ -84,6 +94,7 @@ class ForumPostListCreateAPITestCase(APITestCase):
         """
         Test for DELETE - 405 method not allowed
         """
+        self.client.force_login(self.user)
         data = {}
         response = self.client.delete(self.url, data)
         self.assertEqual(response.status_code, 405)
