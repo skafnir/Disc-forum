@@ -1,6 +1,6 @@
 boto3==1.9.109
 botocore==1.12.109
-Django==2.1.7
+Django==2.1.11
 django-storages==1.7.1
 djangorestframework==3.9.2
 djangorestframework-stubs==0.2.0
